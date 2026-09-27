@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v1.0.2...v2.0.0) (2026-09-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* pe.edu.nova.java.starters:nova-observability-starter becomes nova-observability-spring-boot-starter; consumers migrate with ops/rename-artifacts.py --phase 2 from nova-shared-01-docs.
+
+### Features
+
+* publish the starter as nova-observability-spring-boot-starter ([5b2bdee](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/5b2bdeef5f955fb6d0075224964ba549b78974fb))
+
+
+### Bug Fixes
+
+* **deps:** move to Spring Boot 4.1.1 and Tomcat 11.0.26 ([8f045d6](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/8f045d678f4c5800c4516ef3c7fa31b78f3fd06b))
+* **deps:** move to Spring Boot 4.1.1 and Tomcat 11.0.26 ([cf72827](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/cf72827f0fb29dd96f562343339175a99a4893cd))
+
 ## [1.0.2](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v1.0.1...v1.0.2) (2026-09-27)
 
 
