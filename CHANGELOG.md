@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v2.0.0...v2.0.1) (2026-09-27)
+
+
+### Bug Fixes
+
+* **deps:** let OpenTelemetry instrumentation 2.31.1 bring semconv ([d102d6a](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/d102d6a565b27f734344a52ffab93f129570e577))
+* **deps:** let OpenTelemetry instrumentation 2.31.1 bring semconv ([6168ad1](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/6168ad1e4d24ad2af10e92e0ff9ab80c62c94154))
+
 ## [2.0.0](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v1.0.2...v2.0.0) (2026-09-27)
 
 
