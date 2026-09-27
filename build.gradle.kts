@@ -47,13 +47,14 @@ repositories {
 // cover any classpath (compile, runtime, even buildscript transitives) so the
 // OWASP gate reflects the real, patched state.
 //
-//  - Apache Tomcat 11.0.24+ for CVE-2026-53434, CVE-2026-55276, CVE-2026-53404
-//    (Spring Boot 4.1.0's BOM pins tomcat-embed-core to 11.0.22 which is still
-//    vulnerable; 11.0.24 is the latest 11.0.x patch with the fixes)
+//  - Apache Tomcat 11.0.26+ for CVE-2026-68525, CVE-2026-65905, CVE-2026-65182
+//    (Spring Boot 4.1.1's BOM pins tomcat-embed-core to 11.0.24, which still
+//    carries them; they are fixed in 11.0.25)
 //  - Apache HttpComponents Core 4.4.16+ for CVE-2026-54428, CVE-2026-54399
-//  - Apache HttpComponents Core5 5.4.2+ for CVE-2026-54428, CVE-2026-54399
+//  - Apache HttpComponents Core5 5.4.3+ for CVE-2026-54399 (5.4.2 is not enough)
 //  - Apache Commons BeanUtils 1.11.0+ for CVE-2025-48734
-//  - plexus-utils 3.5.1+ for CVE-2025-67030 (commit 6d780b3 per NVD)
+//  - plexus-utils 3.6.1+ for CVE-2025-67030 (3.5.1 is not enough)
+// Checked against the GitHub Advisory Database on 2026-09-27.
 configurations.all {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.apache.httpcomponents" && requested.name.startsWith("httpcore")) {
@@ -61,41 +62,40 @@ configurations.all {
             because("CVE-2026-54428, CVE-2026-54399 require httpcore 4.4.16+")
         }
         if (requested.group == "org.apache.httpcomponents.core5" && requested.name.startsWith("httpcore5")) {
-            useVersion("5.4.2")
-            because("CVE-2026-54428, CVE-2026-54399 require httpcore5 5.4.2+")
+            useVersion("5.4.3")
+            because("CVE-2026-54399 requires httpcore5 5.4.3+")
         }
         if (requested.group == "commons-beanutils" && requested.name == "commons-beanutils") {
             useVersion("1.11.0")
             because("CVE-2025-48734 requires commons-beanutils 1.11.0+")
         }
         if (requested.group == "org.codehaus.plexus" && requested.name == "plexus-utils") {
-            useVersion("3.5.1")
-            because("CVE-2025-67030 requires plexus-utils 3.5.1+")
+            useVersion("3.6.1")
+            because("CVE-2025-67030 requires plexus-utils 3.6.1+")
         }
     }
 }
 
-val springBootVersion = "4.1.0"
+val springBootVersion = "4.1.1"
 val otelInstrumentationVersion = "2.27.0"
 
-// Force Tomcat 11.0.24 strictly - fixes 3 CVEs in Spring Boot 4.1.0's
-// transitive tomcat-embed-* deps (CVE-2026-53434, CVE-2026-55276,
-// CVE-2026-53404 - all in 11.0.22, fixed in 11.0.23+). Constraints
-// + strictly() used instead of resolutionStrategy.force() to avoid
-// a Gradle 9 config-cache serialization bug.
+// Force Tomcat 11.0.26 strictly - Spring Boot 4.1.1's BOM pins 11.0.24, which
+// still carries CVE-2026-68525, CVE-2026-65905 and CVE-2026-65182 (fixed in
+// 11.0.25). Constraints + strictly() used instead of resolutionStrategy.force()
+// to avoid a Gradle 9 config-cache serialization bug.
 dependencies {
     constraints {
         "implementation"("org.apache.tomcat.embed:tomcat-embed-core") {
-            version { strictly("11.0.24") }
-            because("CVE-2026-53434, CVE-2026-55276, CVE-2026-53404 require 11.0.23+")
+            version { strictly("11.0.26") }
+            because("CVE-2026-68525, CVE-2026-65905, CVE-2026-65182 require 11.0.25+")
         }
         "implementation"("org.apache.tomcat.embed:tomcat-embed-websocket") {
-            version { strictly("11.0.24") }
-            because("Same CVEs in 11.0.22")
+            version { strictly("11.0.26") }
+            because("Same CVEs in 11.0.24")
         }
         "implementation"("org.apache.tomcat.embed:tomcat-embed-el") {
-            version { strictly("11.0.24") }
-            because("Same CVEs in 11.0.22")
+            version { strictly("11.0.26") }
+            because("Same CVEs in 11.0.24")
         }
         // Force Kotlin 2.3.21+ and OpenTelemetry semconv 1.43.0+ to fix the
         // remaining 3 CVEs >= 7 left after the 4.1.0 bump and the Tomcat
@@ -124,7 +124,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor:$springBootVersion")
 
     // Librería pura (transitiva al consumidor)
-    api("pe.edu.nova.java.libs:nova-observability-utils:1.0.0")
+    api("pe.edu.nova.java.libs:nova-observability-utils:1.0.2")
 
     // Spring Boot
     implementation("org.springframework.boot:spring-boot-starter")
