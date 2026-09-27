@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v1.0.2...v1.0.3) (2026-09-27)
+
+
+### Bug Fixes
+
+* **deps:** move to Spring Boot 4.1.1 and Tomcat 11.0.26 ([8f045d6](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/8f045d678f4c5800c4516ef3c7fa31b78f3fd06b))
+* **deps:** move to Spring Boot 4.1.1 and Tomcat 11.0.26 ([cf72827](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/cf72827f0fb29dd96f562343339175a99a4893cd))
+
 ## [1.0.2](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v1.0.1...v1.0.2) (2026-09-27)
 
 
