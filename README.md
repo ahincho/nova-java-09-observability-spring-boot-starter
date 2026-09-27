@@ -5,7 +5,7 @@ dependency. Latency, traffic, errors and saturation are recorded for every
 request, traces are exported over OTLP, and log lines carry the trace id.
 
 The contract it implements lives in
-[nova-observability-utils](https://github.com/ahincho/nova-java-observability-utils),
+[nova-observability-utils](https://github.com/ahincho/nova-java-05-observability-utils),
 which has no framework dependency — this module is the Spring half.
 
 ## What it configures
@@ -30,7 +30,7 @@ authenticated with a token that has `read:packages`.
 ```kotlin
 repositories {
     maven {
-        url = uri("https://maven.pkg.github.com/ahincho/nova-java-observability-spring-boot-starter")
+        url = uri("https://maven.pkg.github.com/ahincho/nova-java-09-observability-spring-boot-starter")
         credentials {
             username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
             password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")

@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   release-please:
-    uses: ahincho/nova-devops/.github/workflows/reusable-release-please.yml@main
+    uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-release-please.yml@main
     secrets:
       # Solo GITHUB_TOKEN. El publish ahora triggerea via workflow_run (ver
       # publish-on-tag.yml) en vez de push:tags, asi que NO necesitamos un

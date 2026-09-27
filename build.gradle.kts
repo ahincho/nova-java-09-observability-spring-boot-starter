@@ -34,7 +34,7 @@ repositories {
     // (falls back to GITHUB_TOKEN for local/manual builds where only that is set).
     maven {
         name = "NovaObservabilityUtils"
-        url = uri("https://maven.pkg.github.com/ahincho/nova-java-observability-utils")
+        url = uri("https://maven.pkg.github.com/ahincho/nova-java-05-observability-utils")
         credentials {
             username = System.getenv("GITHUB_ACTOR")
             password = System.getenv("NOVA_PACKAGES_READ_TOKEN") ?: System.getenv("GITHUB_TOKEN")
@@ -291,7 +291,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/ahincho/nova-java-observability-spring-boot-starter")
+            url = uri("https://maven.pkg.github.com/ahincho/nova-java-09-observability-spring-boot-starter")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
