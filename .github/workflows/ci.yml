@@ -23,7 +23,7 @@ jobs:
     uses: ahincho/nova-shared-02-pipelines/.github/workflows/reusable-sonarcloud-gradle.yml@main
     with:
       sonar-org: ahincho
-      sonar-project-key: ahincho_nova-observability-starter
+      sonar-project-key: ahincho_nova-observability-spring-boot-starter
     secrets: inherit
 
   matrix:

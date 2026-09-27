@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation("pe.edu.nova.java.starters:nova-observability-starter:0.1.0-SNAPSHOT")
+    implementation("pe.edu.nova.java.starters:nova-observability-spring-boot-starter:2.0.0")
 }
 ```
 

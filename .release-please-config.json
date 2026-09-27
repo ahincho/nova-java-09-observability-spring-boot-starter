@@ -2,8 +2,8 @@
   "last-release-sha": "df070865d774885f4b89a3058b7af492d65f5344",
   "packages": {
     ".": {
-      "component": "nova-observability-starter",
-      "package-name": "pe.edu.nova.java.starters:nova-observability-starter",
+      "component": "nova-observability-spring-boot-starter",
+      "package-name": "pe.edu.nova.java.starters:nova-observability-spring-boot-starter",
       "release-type": "java",
       "include-component-in-tag": false,
       "skip-snapshot": true,

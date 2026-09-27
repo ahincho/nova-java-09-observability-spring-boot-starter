@@ -1,1 +1,1 @@
-rootProject.name = "nova-observability-starter"
+rootProject.name = "nova-observability-spring-boot-starter"
