@@ -129,3 +129,13 @@ jobs:
           # NOVA_RELEASE_PAT fallback was REMOVED in Phase 3; configure
           # NOVA_PACKAGES_READ_TOKEN to preserve cross-repo reads.
           NOVA_PACKAGES_READ_TOKEN: ${{ secrets.NOVA_PACKAGES_READ_TOKEN || secrets.GITHUB_TOKEN }}
+
+      # Un publish en verde no prueba que el artefacto se pueda descargar (ADR-039, regla 6).
+      - name: Verify the publication can be downloaded
+        if: steps.detect.outputs.should_publish == 'true'
+        uses: ahincho/nova-shared-02-pipelines/.github/actions/nova-verify-publication@main
+        with:
+          group-id: pe.edu.nova.java.starters
+          artifact-ids: nova-observability-spring-boot-starter
+          version: ${{ steps.detect.outputs.tag }}
+          token: ${{ github.token }}
