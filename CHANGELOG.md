@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v1.0.1...v1.0.2) (2026-09-27)
+
+
+### Documentation
+
+* add a README and adopt EPL-2.0 ([97a4c9c](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/97a4c9c64aba88385684b68b5d1d17b8e2485c3c))
+
 ## [1.0.1](https://github.com/ahincho/nova-java-observability-spring-boot-starter/compare/v1.0.0...v1.0.1) (2026-07-13)
 
 
