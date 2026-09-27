@@ -77,7 +77,7 @@ configurations.all {
 }
 
 val springBootVersion = "4.1.1"
-val otelInstrumentationVersion = "2.27.0"
+val otelInstrumentationVersion = "2.31.1"
 
 // Force Tomcat 11.0.26 strictly - Spring Boot 4.1.1's BOM pins 11.0.24, which
 // still carries CVE-2026-68525, CVE-2026-65905 and CVE-2026-65182 (fixed in
@@ -97,23 +97,15 @@ dependencies {
             version { strictly("11.0.26") }
             because("Same CVEs in 11.0.24")
         }
-        // Force Kotlin 2.3.21+ and OpenTelemetry semconv 1.43.0+ to fix the
-        // remaining 3 CVEs >= 7 left after the 4.1.0 bump and the Tomcat
-        // constraint above. Versions verified against Maven Central 2026-07-13.
-        //   - kotlin-stdlib 2.3.21+ for CVE-2026-53914 CRITICAL 9.8
-        //   - opentelemetry-semconv 1.43.0+ for CVE-2026-29181 HIGH 7.5
-        //     and CVE-2026-39883 HIGH 7.3 (both in 1.40.0, fixed in 1.43.0+)
+        // Kotlin 2.4.0 para CVE-2026-53914 (CRITICAL 9.8), verificado contra Maven Central el
+        // 2026-07-13.
+        // semconv no se fuerza: CVE-2026-29181 y CVE-2026-39883 son de OpenTelemetry-Go, y
+        // semconv-incubating se publica con sufijo (1.43.0-alpha), así que un strictly("1.43.0")
+        // viaja en la metadata y ningún consumidor resuelve el starter. La instrumentación
+        // 2.31.1 ya trae semconv 1.43.0 y semconv-incubating 1.43.0-alpha.
         "implementation"("org.jetbrains.kotlin:kotlin-stdlib") {
             version { strictly("2.4.0") }
             because("CVE-2026-53914 CRITICAL 9.8 requires 2.4.0+ (2.3.21 is still flagged in NVD)")
-        }
-        "implementation"("io.opentelemetry.semconv:opentelemetry-semconv") {
-            version { strictly("1.43.0") }
-            because("CVE-2026-29181 HIGH 7.5 + CVE-2026-39883 HIGH 7.3 require 1.43.0+")
-        }
-        "implementation"("io.opentelemetry.semconv:opentelemetry-semconv-incubating") {
-            version { strictly("1.43.0") }
-            because("Same CVEs as opentelemetry-semconv 1.40.0")
         }
     }
     // BOMs — applied to all configurations via api (propagates to implementation, compileOnly, etc.)
