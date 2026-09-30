@@ -47,9 +47,9 @@ repositories {
 // cover any classpath (compile, runtime, even buildscript transitives) so the
 // OWASP gate reflects the real, patched state.
 //
-//  - Apache Tomcat 11.0.26+ for CVE-2026-68525, CVE-2026-65905, CVE-2026-65182
-//    (Spring Boot 4.1.1's BOM pins tomcat-embed-core to 11.0.24, which still
-//    carries them; they are fixed in 11.0.25)
+//  - Apache Tomcat 11.0.26+ para CVE-2026-68525, CVE-2026-65905, CVE-2026-65182
+//    (el BOM de Spring Boot 4.0.8 fija tomcat-embed-core en 11.0.24, que todavía
+//    las tiene; se corrigen en la 11.0.25)
 //  - Apache HttpComponents Core 4.4.16+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache HttpComponents Core5 5.4.3+ for CVE-2026-54399 (5.4.2 is not enough)
 //  - Apache Commons BeanUtils 1.11.0+ for CVE-2025-48734
@@ -76,13 +76,17 @@ configurations.all {
     }
 }
 
-val springBootVersion = "4.1.1"
+// Misma versión de Spring Boot que usa el resto de la plataforma (toolchain, BOM de Maven y
+// demás starters). El BOM viaja en la metadata publicada (api(platform(...))) y Gradle elige la
+// versión más alta, así que una versión mayor aquí se impone a la del plugin de cada servicio
+// que consume el starter. La 4.0.8 maneja Spring Framework 7.0.9.
+val springBootVersion = "4.0.8"
 val otelInstrumentationVersion = "2.31.1"
 
-// Force Tomcat 11.0.26 strictly - Spring Boot 4.1.1's BOM pins 11.0.24, which
-// still carries CVE-2026-68525, CVE-2026-65905 and CVE-2026-65182 (fixed in
-// 11.0.25). Constraints + strictly() used instead of resolutionStrategy.force()
-// to avoid a Gradle 9 config-cache serialization bug.
+// Se fuerza Tomcat 11.0.26 con strictly: el BOM de Spring Boot 4.0.8 fija la 11.0.24, que
+// todavía tiene CVE-2026-68525, CVE-2026-65905 y CVE-2026-65182 (corregidas en la 11.0.25).
+// Se usan constraints con strictly() en lugar de resolutionStrategy.force() para evitar un
+// bug de serialización de la caché de configuración de Gradle 9.
 dependencies {
     constraints {
         "implementation"("org.apache.tomcat.embed:tomcat-embed-core") {
