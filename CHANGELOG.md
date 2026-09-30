@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v2.0.1...v2.0.2) (2026-09-30)
+
+
+### Bug Fixes
+
+* **deps:** build on Spring Boot 4.0.8 like the rest of the platform ([c6a6832](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/c6a683239918ccacf06e5896f82d37af2d33cea1))
+
 ## [2.0.1](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v2.0.0...v2.0.1) (2026-09-27)
 
 
