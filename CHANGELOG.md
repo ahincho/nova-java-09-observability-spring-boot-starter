@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v2.0.2...v3.0.0) (2026-10-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* nova.observability.otlp.endpoint no longer defaults to http://localhost:4318. A service that relied on it must set nova.observability.otlp.endpoint or OTEL_EXPORTER_OTLP_ENDPOINT, or nothing is exported. CollectorHealthIndicator is registered only with an endpoint and takes it in its constructor instead of ObservabilityProperties, and OtlpExporterAutoConfiguration is removed.
+
+### Features
+
+* export OTLP only when an endpoint is configured ([b4adf87](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/b4adf87814cd649f26d85a6724629669cc6e36b6))
+
+
+### Documentation
+
+* document the OTLP endpoint rule and the 3.0.0 migration ([e61f1f0](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/e61f1f03ca9a660490c59fc9d36a8a0d64ab203d))
+
 ## [2.0.2](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v2.0.1...v2.0.2) (2026-09-30)
 
 
