@@ -2,7 +2,7 @@ package pe.edu.nova.java.starters.observability.health;
 
 import org.springframework.boot.health.contributor.AbstractHealthIndicator;
 import org.springframework.boot.health.contributor.Health;
-import pe.edu.nova.java.starters.observability.config.ObservabilityProperties;
+import org.springframework.util.Assert;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -11,8 +11,12 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 /**
- * Indicador de salud obligatorio que verifica la conectividad
- * con el OpenTelemetry Collector.
+ * Indicador de salud que verifica la conectividad con el OpenTelemetry Collector.
+ *
+ * <p>Solo existe cuando el servicio tiene un endpoint OTLP configurado: sin endpoint no hay
+ * Collector que verificar y el starter no lo registra, así que un servicio sin Collector no
+ * reporta {@code DOWN} por eso. Verifica el endpoint efectivo, el mismo al que exporta
+ * OpenTelemetry (ver {@link pe.edu.nova.java.starters.observability.config.OtlpEndpointResolver}).</p>
  *
  * <p>Reporta {@code UP} si el Collector responde con status &lt; 500,
  * {@code DOWN} si no está disponible o responde con error del servidor.</p>
@@ -28,11 +32,12 @@ public class CollectorHealthIndicator extends AbstractHealthIndicator {
     /**
      * Crea una nueva instancia del indicador de salud del Collector.
      *
-     * @param properties propiedades de configuración con el endpoint del Collector
+     * @param endpoint endpoint OTLP del Collector; no puede estar vacío
      */
-    public CollectorHealthIndicator(ObservabilityProperties properties) {
+    public CollectorHealthIndicator(String endpoint) {
         super("No se puede conectar con el OpenTelemetry Collector");
-        this.endpoint = properties.getOtlp().getEndpoint();
+        Assert.hasText(endpoint, "El endpoint del OpenTelemetry Collector no puede estar vacío");
+        this.endpoint = endpoint;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(3))
                 .build();
