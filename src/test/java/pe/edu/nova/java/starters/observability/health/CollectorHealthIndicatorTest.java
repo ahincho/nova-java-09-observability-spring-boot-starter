@@ -1,5 +1,6 @@
 package pe.edu.nova.java.starters.observability.health;
 
+import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.health.contributor.Health;
 import org.springframework.boot.health.contributor.Status;
@@ -50,8 +51,35 @@ class CollectorHealthIndicatorTest {
 
         Health health = new CollectorHealthIndicator(endpoint).health();
 
+        // El ConnectException del HttpClient llega sin mensaje: el detalle es su tipo, y no el error de un
+        // detalle nulo, que es lo que reportaba la 3.0.0.
         assertThat(health.getStatus()).isEqualTo(Status.DOWN);
-        assertThat(health.getDetails()).containsEntry("endpoint", endpoint).containsKey("error");
+        assertThat(health.getDetails())
+                .containsEntry("endpoint", endpoint)
+                .containsEntry("error", "java.net.ConnectException");
+    }
+
+    @Test
+    void aFailureIsDescribedByItsTypeAndItsMessageIfItHasOne() {
+        assertThat(CollectorHealthIndicator.describe(new IOException("refused")))
+                .isEqualTo("java.io.IOException: refused");
+        assertThat(CollectorHealthIndicator.describe(new IOException())).isEqualTo("java.io.IOException");
+        assertThat(CollectorHealthIndicator.describe(new IOException(" "))).isEqualTo("java.io.IOException");
+    }
+
+    @Test
+    void anInterruptedCheckIsDownAndKeepsTheThreadInterrupted() {
+        try (StubCollector collector = new StubCollector()) {
+            Thread.currentThread().interrupt();
+            try {
+                Health health = new CollectorHealthIndicator(collector.endpoint()).health();
+
+                assertThat(health.getStatus()).isEqualTo(Status.DOWN);
+                assertThat(Thread.currentThread().isInterrupted()).isTrue();
+            } finally {
+                Thread.interrupted();
+            }
+        }
     }
 
     @Test

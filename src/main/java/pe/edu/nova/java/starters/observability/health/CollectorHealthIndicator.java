@@ -4,6 +4,7 @@ import org.springframework.boot.health.contributor.AbstractHealthIndicator;
 import org.springframework.boot.health.contributor.Health;
 import org.springframework.util.Assert;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -69,10 +70,31 @@ public class CollectorHealthIndicator extends AbstractHealthIndicator {
                         .withDetail("endpoint", endpoint)
                         .withDetail("statusCode", response.statusCode());
             }
-        } catch (Exception e) {
-            builder.down()
-                    .withDetail("endpoint", endpoint)
-                    .withDetail("error", e.getMessage());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            down(builder, e);
+        } catch (IOException | RuntimeException e) {
+            down(builder, e);
         }
+    }
+
+    private void down(Health.Builder builder, Exception failure) {
+        builder.down().withDetail("endpoint", endpoint).withDetail("error", describe(failure));
+    }
+
+    /**
+     * Describe una falla como lo hace Spring Boot en un health caído: el tipo y, si lo trae, el mensaje.
+     *
+     * <p>El {@code ConnectException} del {@link HttpClient} no trae mensaje cuando el Collector no escucha,
+     * y Spring Boot no acepta un detalle nulo: con el mensaje solo, el indicador fallaba en lugar de
+     * reportar {@code DOWN} con el error real.</p>
+     *
+     * @param failure la falla
+     * @return el tipo de la falla y su mensaje
+     */
+    static String describe(Throwable failure) {
+        String message = failure.getMessage();
+        String type = failure.getClass().getName();
+        return message == null || message.isBlank() ? type : type + ": " + message;
     }
 }
