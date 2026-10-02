@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v3.0.0...v3.0.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* report the collector as down when its failure has no message ([c70719f](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/commit/c70719f0e67a8257629ecd996de65d8d513c1df1))
+
 ## [3.0.0](https://github.com/ahincho/nova-java-09-observability-spring-boot-starter/compare/v2.0.2...v3.0.0) (2026-10-02)
 
 
