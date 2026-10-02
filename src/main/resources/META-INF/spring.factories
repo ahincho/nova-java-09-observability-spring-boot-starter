@@ -1,0 +1,2 @@
+org.springframework.boot.EnvironmentPostProcessor=\
+pe.edu.nova.java.starters.observability.config.NovaObservabilityEnvironmentPostProcessor

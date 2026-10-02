@@ -97,8 +97,11 @@ public class ObservabilityProperties {
      */
     public static class OtlpProperties {
 
-        /** Endpoint del OpenTelemetry Collector. Por defecto: {@code http://localhost:4318}. */
-        private String endpoint = "http://localhost:4318";
+        /**
+         * Endpoint del OpenTelemetry Collector. No tiene valor por defecto: si no se define ni esta
+         * propiedad ni otel.exporter.otlp.endpoint, la exportación OTLP queda apagada.
+         */
+        private String endpoint;
 
         /** Protocolo de exportación OTLP. Por defecto: {@code http/protobuf}. */
         private String protocol = "http/protobuf";

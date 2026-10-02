@@ -145,9 +145,15 @@ dependencies {
     // Validation
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    // Tests
+    // Tests. La versión de JUnit (6.0.3) la fija el BOM de Spring Boot: el 5.11.4 que estaba fijo
+    // aquí ya lo subía el BOM al resolver el conflicto. Las pruebas levantan un servicio web, como el
+    // de un consumidor real, y el webmvc de compileOnly no llega a su classpath.
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc")
+    // El SDK que construye opentelemetry-spring-boot-starter; la prueba de arranque lo usa para
+    // forzar el envío de un span.
+    testImplementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure")
+    testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.junit.platform:junit-platform-launcher")
 }
 

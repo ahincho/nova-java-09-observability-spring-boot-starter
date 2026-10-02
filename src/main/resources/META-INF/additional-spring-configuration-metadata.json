@@ -39,8 +39,7 @@
     {
       "name": "nova.observability.otlp.endpoint",
       "type": "java.lang.String",
-      "description": "Endpoint del OpenTelemetry Collector para exportación OTLP.",
-      "defaultValue": "http://localhost:4318"
+      "description": "Endpoint del OpenTelemetry Collector para exportación OTLP. No tiene valor por defecto: si no se define ni esta propiedad ni otel.exporter.otlp.endpoint (OTEL_EXPORTER_OTLP_ENDPOINT), la exportación queda apagada y no se registra el indicador de salud del Collector."
     },
     {
       "name": "nova.observability.otlp.protocol",
